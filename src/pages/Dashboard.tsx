@@ -1,3 +1,5 @@
+// import EmployeeSummary from "../components/employees/EmployeeSummary";
+// import EmployeeTable from "../components/employees/EmployeeTable";
 import { useAuth } from "../context/useAuth";
 
 const Dashboard = () => {
@@ -10,7 +12,8 @@ const Dashboard = () => {
         <button onClick={logout}>Logout</button>
       </header>
 
-      
+      {/* <EmployeeSummary />
+      <EmployeeTable /> */}
     </div>
   );
 };
