@@ -2,6 +2,8 @@ import { useState } from "react";
 // import { useAuth } from "../../context/AuthContext";
 // import { useNavigate } from "react-router-dom";
 
+import '../../styles/global.css'
+
 const LoginForm = () => {
 //   const { login } = useAuth();
 //   const navigate = useNavigate();
