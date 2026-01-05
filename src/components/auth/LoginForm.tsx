@@ -1,42 +1,70 @@
-import { useState } from "react";
-// import { useAuth } from "../../context/AuthContext";
-// import { useNavigate } from "react-router-dom";
-
-import '../../styles/global.css'
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/useAuth";
+import "../../styles/global.css";
 
 const LoginForm = () => {
-//   const { login } = useAuth();
-//   const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-//   const [error, setError] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading,setIsLoading] = useState(false);
+  
+
+  useEffect(() => {
+        
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
 
-  const submit = () => {
-    // if (!login(email, password)) {
-    //   setError("Invalid credentials");
-    // } else {
-    //   navigate("/");
-    // }
-    console.log("Email", email);
-    console.log("Password", password);
-    
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const success = await login(email, password);
+      
+      if (!success) {
+        setError("Invalid email or password");
+        setIsLoading(false);
+        return;
+      }
+      
+      console.log("Login successful");
+      
+    } catch (err) {
+      setError(`Login failed. Please try again. + ${err}`);
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="card">
       <h2>Login</h2>
-      <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
+
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
       <input
         placeholder="Password"
         type="password"
-        onChange={e => setPassword(e.target.value)}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
-      {/* {error && <p className="error">{error}</p>} */}
-      <button onClick={submit}>Login</button>
+
+      {error && <p className="error">{error}</p>}
+
+      <button type="submit" disabled={isLoading} onClick={handleSubmit}>{isLoading ? "Logging in..." : "Login"}</button>
     </div>
   );
-}
-
+};
 
 export default LoginForm;
