@@ -16,7 +16,7 @@ const LoginForm = () => {
   useEffect(() => {
         
     if (isAuthenticated) {
-      navigate("/dashboard", { replace: true });
+      navigate("/", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
@@ -36,6 +36,7 @@ const LoginForm = () => {
       }
       
       console.log("Login successful");
+      setIsLoading(false);
       
     } catch (err) {
       setError(`Login failed. Please try again. + ${err}`);

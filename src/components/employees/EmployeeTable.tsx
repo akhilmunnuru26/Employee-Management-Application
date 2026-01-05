@@ -3,6 +3,7 @@ import { useEmployees } from "../../context/useEmployees";
 import EmployeeFilters from "./EmployeeFilters";
 import EmployeeForm from "./EmployeeForm";
 import EmployeeRow from "./EmployeeRow";
+import type { Employee } from "../../context/employee.context";
 
 const EmployeeTable = () => {
   const { employees } = useEmployees();
@@ -10,7 +11,7 @@ const EmployeeTable = () => {
   const [search, setSearch] = useState("");
   const [gender, setGender] = useState("");
   const [status, setStatus] = useState("");
-  const [editing, setEditing] = useState<any>(null);
+  const [editing, setEditing] = useState<Employee | undefined | any>(null);
 
   const filtered = employees.filter(e => {
     return (

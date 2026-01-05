@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, BrowserRouter as Router } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 
 export default function App() {
@@ -9,13 +10,17 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="*" element={<Navigate to="/login" />} />
-         <Route
-        path="/dashboard"
+        <Route
+        path="/"
         element={
+          <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
         }
       />
+      
+        <Route path="*" element={<Navigate to="/login" />} />
+        
       </Routes>
     </Router>
   );
